@@ -51,6 +51,8 @@ function UserTab(props)
                         <th>Reg. Date</th>
                         <th>Status</th>
                         <th>Last Login</th>
+                        <th>IP Address</th>
+                        <th>HWID</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,12 +129,15 @@ function formatDate(date)
 
 function makeTableRow(i, cookies, refresh)
 {
+    console.log(i);
     return (
         <tr key={i.name}>
             <th scope="row">{i.name}</th>
             <td>{i.regdate}</td>
             <td>{i.status == 0 ? "Admin" : GetSuspend(i, cookies, refresh)}</td>
             <td>{formatDate(i.lastlogin)}</td>
+            <td>{i.ip}</td>
+            <td>{i.hwid}</td>
         </tr>);
 }
 
