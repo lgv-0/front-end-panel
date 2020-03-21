@@ -129,7 +129,6 @@ function formatDate(date)
 
 function makeTableRow(i, cookies, refresh)
 {
-    console.log(i);
     return (
         <tr key={i.name}>
             <th scope="row">{i.name}</th>
