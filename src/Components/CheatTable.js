@@ -21,7 +21,7 @@ function CheatTable(props)
             {
                 console.log("error");
             })
-    }, [CheatData.length]);
+    }, [CheatData.length, props]);
 
     return (
             <Table dark>

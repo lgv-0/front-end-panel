@@ -11,7 +11,7 @@ function Panel(props)
     let [name, sName] = useState("");
     const { path } = useParams();
 
-    useEffect(()=>{sName(props.cookies.get("name"))}, []);
+    useEffect(()=>{sName(props.cookies.get("name"))}, [props]);
 
     let getTab = () =>
     {
@@ -38,7 +38,7 @@ function Panel(props)
                 <Link to="/panel/keys"><div className="link">Keys</div></Link>
                 <Link to="/panel/info"><div className="link">Cheat Info</div></Link>
                 <div id="bottom">
-                    <p>{name}, <a onClick={()=>{props.cookies.remove("msid"); sName("");}}>Logout</a></p>
+                    <p>{name}, <a href="##" onClick={()=>{props.cookies.remove("msid"); sName("");}}>Logout</a></p>
                 </div>
             </section>
             <section className="content">

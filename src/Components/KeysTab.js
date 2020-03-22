@@ -42,7 +42,7 @@ function KeyTab(props)
                                     <th scope="row">{i.id}</th>
                                     <th>{i.key}</th>
                                     <th>
-                                    {i.id != 1 ? <Button color="warning" onClick={(e)=>HandleDeleteRequest(e, i, props.cookies, sKeyData)}>Delete</Button> : 
+                                    {i.id !== 1 ? <Button color="warning" onClick={(e)=>HandleDeleteRequest(e, i, props.cookies, sKeyData)}>Delete</Button> : 
                                         <Button onClick={()=>{sKeyData([])}}>Refresh</Button>}
                                     </th>
                                 </tr>
