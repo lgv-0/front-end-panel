@@ -105,7 +105,7 @@ function HandleSuspendResume (e, i, cookies, refresh, status)
 
 function GetSuspend(i, props, refresh)
 {
-    let toReturn = i.status === 2 ? <Button color="warning" onClick={(e)=>HandleSuspendResume(e, i, props, refresh, 1)}>Denied</Button>
+    let toReturn = i.status == 2 ? <Button color="warning" onClick={(e)=>HandleSuspendResume(e, i, props, refresh, 1)}>Denied</Button>
         : <Button color="success" onClick={(e)=>HandleSuspendResume(e, i, props, refresh, 2)}>Allowed</Button>;
     return (toReturn);
 }
@@ -133,7 +133,7 @@ function makeTableRow(i, cookies, refresh)
         <tr key={i.name}>
             <th scope="row">{i.name}</th>
             <td>{i.regdate}</td>
-            <td>{i.status === 0 ? "Admin" : GetSuspend(i, cookies, refresh)}</td>
+            <td>{i.status == 0 ? "Admin" : GetSuspend(i, cookies, refresh)}</td>
             <td>{formatDate(i.lastlogin)}</td>
             <td>{i.ip}</td>
             <td>{i.hwid}</td>
