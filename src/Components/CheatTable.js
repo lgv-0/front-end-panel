@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import APICall from "./API";
 import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { APIGetCheats } from "./API";
 
 function CheatTable(props)
 {
@@ -11,11 +11,10 @@ function CheatTable(props)
     {
         props.title("Cheat Information");
         if (props.cookies.get("msid") != null && CheatData.length === 0)
-            APICall({"req":"getcheats", "atk":props.cookies.get("msid")},
+            APIGetCheats({"atk":props.cookies.get("msid")},
             (data)=>
             {
-                let tmpKeys = JSON.parse(data.replace("},]", "}]"));
-                sCheatData(tmpKeys);
+                sCheatData(data);
             },
             (error)=>
             {
@@ -31,7 +30,6 @@ function CheatTable(props)
                         <th>Name</th>
                         <th>Version</th>
                         <th>Target</th>
-                        <th>URL</th>
                         <th>#</th>
                     </tr>
                 </thead>
@@ -45,7 +43,6 @@ function CheatTable(props)
                                     <th>{i.name}</th>
                                     <th>{i.version}</th>
                                     <th>{i.target}</th>
-                                    <th>{i.url}</th>
                                     <th><Link to={`/panel/info/${i.id}`}>Modify {i.name}</Link></th>
                                 </tr>
                             )

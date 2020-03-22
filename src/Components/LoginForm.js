@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Field, Form as FormikForm } from 'formik';
 import * as Yup from 'yup';
 import { FormGroup, Input, Form, Label, Button, Alert } from 'reactstrap';
-import APICall from "./API";
+import { APIAuth } from "./API";
 
 const loginSchema = Yup.object().shape(
     {
@@ -24,15 +24,10 @@ export const LoginForm = (props) =>
         {
             let us = values.username, pw = values.password;
 
-            us = us.replace(/[^A-Za-z0-9]/g, '');
-            pw = pw.replace(/[^A-Za-z0-9]/g, '');
-            us = us.replace(/[a-zA-Z]/g,(c)=> {return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26)});
-            pw = pw.replace(/[a-zA-Z]/g,(c)=> {return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26)});
-
-            APICall({"req":"auth", "usr":us, "pass":pw},
+            APIAuth({"username":us, "password":pw},
             (data)=>
                 {
-                    if (data.slice(0,2) !== "x_")
+                    if (data.length < 18)
                     {
                         //Invalid
                         fText("Username / Password invalid");
@@ -40,7 +35,7 @@ export const LoginForm = (props) =>
                     else
                     {
                         //Valid
-                        cookies.set("msid", data.slice(2, data.length));
+                        cookies.set("msid", data);
                         cookies.set("name", values.username);
                         fName(values.username);
                     }

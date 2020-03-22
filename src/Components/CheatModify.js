@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import APICall from "./API";
 import * as Yup from 'yup';
 import { Formik, Field, Form as FormikForm } from 'formik';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import styled from "styled-components";
 import { Redirect } from 'react-router';
+import { APIGet } from "./API";
 
 function CheatModify(props)
 {
@@ -30,7 +30,7 @@ function CheatModify(props)
 
     let cb = (values, cookies, fTitle) =>
     {
-        APICall({
+        APIGet({
             "req":"updcheat",
             "atk":cookies.get("msid"),
             "id":TargetID,
@@ -53,7 +53,7 @@ function CheatModify(props)
     useEffect(() =>
     {
         if (props.cookies.get("msid") != null)
-            APICall({"req":"getcheat", "atk":props.cookies.get("msid"), "id":TargetID},
+            APIGet({"req":"getcheat", "atk":props.cookies.get("msid"), "id":TargetID},
             (data)=>
             {
                 sFormFinal(

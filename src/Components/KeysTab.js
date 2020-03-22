@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import APICall from "./API";
 import { Table, Button, Container, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import styled from "styled-components";
+import { APIDeleteKey, APIGetKeys, APIPostKey } from "./API";
 
 function KeyTab(props)
 {
@@ -10,11 +10,10 @@ function KeyTab(props)
     useEffect(() =>
     {
         if (props.cookies.get("msid") != null && KeyData.length === 0)
-            APICall({"req":"getkeys", "atk":props.cookies.get("msid")},
+            APIGetKeys({"atk":props.cookies.get("msid")},
             (data)=>
             {
-                let tmpKeys = JSON.parse(data.replace("},]", "}]"));
-                sKeyData(tmpKeys);
+                sKeyData(data);
             },
             (error)=>
             {
@@ -107,11 +106,10 @@ function KeyForm(props)
 
 function HandleCreateRequest(e, cookies, key, fKeyData)
 {
-    APICall({"req":"createkey", "atk":cookies.get("msid"), "key":key},
+    APIPostKey({"atk":cookies.get("msid"), "key":key},
         (data)=>
         {
-            if (data === "x_Success")
-                fKeyData([]);
+            fKeyData([]);
         },
         ()=>
         {
@@ -121,11 +119,10 @@ function HandleCreateRequest(e, cookies, key, fKeyData)
 
 function HandleDeleteRequest(e, i, cookies, refresh)
 {
-    APICall({"req":"delkey", "atk":cookies.get("msid"), "key":i["key"]},
+    APIDeleteKey({"atk":cookies.get("msid"), "key":i["id"]},
         (data)=>
         {
-            if (data === "x_Success")
-                refresh([]);
+            refresh([]);
         },
         ()=>
         {

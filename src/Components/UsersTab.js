@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import APICall from "./API";
 import { Table, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { APIGet, APIGetUsers } from "./API";
 
 function UserTab(props)
 {
@@ -13,18 +13,17 @@ function UserTab(props)
     useEffect(() =>
     {
         if (props.cookies.get("msid") != null && UserData.length === 0)
-            APICall({"req":"grab", "atk":props.cookies.get("msid")},
+            APIGetUsers({"atk":props.cookies.get("msid")},
                 (data)=>
                 {
-                    let tmpUsers = JSON.parse(data.replace("},]", "}]"));
-                    sUserData(tmpUsers);
+                    sUserData(data);
                     sDisplayNumb(document.getElementsByClassName("table-dark")[0].getElementsByTagName("tr").length - 1);
                 },
                 (error)=>
                 {
-                    console.log("error");
+                    console.log(error);
                 })
-    }, [props, UserData.length]);
+    }, [UserData.length]);
 
     let ChangePageUpdate = function(inc) {setCurrentPage(parseInt(inc.target.innerText) - 1);}
 
@@ -91,7 +90,7 @@ let MakePageOptions = (cnt, updfnc) =>
 
 function HandleSuspendResume (e, i, cookies, refresh, status)
 {
-    APICall({"req":"setstat", "atk":cookies.get("msid"), "name":i["name"], "status":status},
+    APIGet({"req":"setstat", "atk":cookies.get("msid"), "name":i["name"], "status":status},
         (data)=>
         {
             if (data === "x_Success")
@@ -110,31 +109,14 @@ function GetSuspend(i, props, refresh)
     return (toReturn);
 }
 
-function formatDate(date)
-{
-    let d = new Date(date), hh = d.getHours(), m = d.getMinutes(), s = d.getSeconds(), h = hh;
-    let dd = "AM";
-    if (h >= 12)
-    {
-      h = hh - 12;
-      dd = "PM";
-    }
-    if (h === 0)
-      h = 12;
-
-    m = m < 10 ? "0" + m : m;
-
-    return date.replace(new RegExp("0?" + hh + ":" + m + ":" + (s < 10 ? "0" + s : s)), h + ":" + m + " " + dd);
-}
-
 function makeTableRow(i, cookies, refresh)
 {
     return (
         <tr key={i.name}>
             <th scope="row">{i.name}</th>
-            <td>{i.regdate}</td>
+            <td>{i.regdate.trim(0, 50)}</td>
             <td>{i.status == 0 ? "Admin" : GetSuspend(i, cookies, refresh)}</td>
-            <td>{formatDate(i.lastlogin)}</td>
+            <td>{i.lastlogin}</td>
             <td>{i.ip}</td>
             <td>{i.hwid}</td>
         </tr>);
