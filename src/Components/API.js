@@ -14,7 +14,7 @@ export function APICall(data, callbackSuccess, callbackError)
 
 export function APIGet(data, callbackSuccess, callbackError)
 {
-    axios.get("http://66.70.190.162/panel/auth", queryString.stringify(data),
+    axios.get("https://66.70.190.162/panel/auth", queryString.stringify(data),
         {
             "headers":{"Content-Type":"application/json", "Accept":"*"}
         }).then((response) =>
@@ -25,7 +25,7 @@ export function APIGet(data, callbackSuccess, callbackError)
 
 export function APIGetKeys(data, callbackSuccess, callbackError)
 {
-    axios.get("http://66.70.190.162/panel/keys",
+    axios.get("https://66.70.190.162/panel/keys",
         {
             "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
         }).then((response) =>
@@ -36,7 +36,7 @@ export function APIGetKeys(data, callbackSuccess, callbackError)
 
 export function APIGetCheats(data, callbackSuccess, callbackError)
 {
-    axios.get("http://66.70.190.162/panel/cheats",
+    axios.get("https://66.70.190.162/panel/cheats",
         {
             "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
         }).then((response) =>
@@ -47,7 +47,7 @@ export function APIGetCheats(data, callbackSuccess, callbackError)
 
 export function APIGetUsers(data, callbackSuccess, callbackError)
 {
-    axios.get("http://66.70.190.162/panel/users",
+    axios.get("https://66.70.190.162/panel/users",
         {
             "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
         }).then((response) =>
@@ -58,7 +58,7 @@ export function APIGetUsers(data, callbackSuccess, callbackError)
 
 export function APIPostKey(data, callbackSuccess, callbackError)
 {
-    axios.post("http://66.70.190.162/panel/keys", {"key":data.key},
+    axios.post("https://66.70.190.162/panel/keys", {"key":data.key},
         {
             "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
         }).then((response) =>
@@ -69,7 +69,7 @@ export function APIPostKey(data, callbackSuccess, callbackError)
 
 export function APIDeleteKey(data, callbackSuccess, callbackError)
 {
-    axios.delete(`http://66.70.190.162/panel/keys/${data.key}`,
+    axios.delete(`https://66.70.190.162/panel/keys/${data.key}`,
         {
             "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
         }).then((response) =>
@@ -80,7 +80,7 @@ export function APIDeleteKey(data, callbackSuccess, callbackError)
 
 export function APIAuth(data, callbackSuccess, callbackError)
 {
-    axios.post("http://66.70.190.162/panel/auth", data,
+    axios.post("https://66.70.190.162/panel/auth", data,
         {
             "headers":{"Content-Type":"application/json", "Accept":"*"}
         }).then((response) =>
