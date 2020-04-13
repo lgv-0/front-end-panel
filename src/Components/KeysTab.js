@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Container, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Table, Button, Container, Input, InputGroup, InputGroupAddon, Label } from 'reactstrap';
 import styled from "styled-components";
-import { APIDeleteKey, APIGetKeys, APIPostKey } from "./API";
+import { APIDeleteKey, APIGetKeys, APIPostKey, APIGetCheats } from "./API";
 
 function KeyTab(props)
 {
@@ -86,6 +86,24 @@ function KeyForm(props)
 {
     let [textInput, sTextInput] = useState("");
 
+    let [cheatArray, sCheatArray] = useState([]);
+
+    useEffect(() =>
+    {
+        if (cheatArray.length === 0)
+        {
+            APIGetCheats({"atk":props.cookies.get("msid")},
+            (data)=>
+            {
+                sCheatArray(data);
+            },
+            (error)=>
+            {
+                console.log("error");
+            })
+        }
+    }, [cheatArray.length]);
+
     return (
         <Container className="keyCreate">
             <h3>Create Key</h3>
@@ -95,9 +113,21 @@ function KeyForm(props)
                     <Button color="secondary" onClick={(e)=>{sTextInput(makeid(20))}}>Generate Random</Button>
                 </InputGroupAddon>
             </InputGroup>
+            { cheatArray.map((e)=>{ return (
+                <InputGroup>
+                    <Input type="checkbox" key={e.id} name={e.name} title={e.name} />
+                    <Label for={e.name}>{e.name}</Label>
+                </InputGroup>
+                )
+                }) }
             <br />
             <InputGroup>
-                <Button color="info" block onClick={(e)=>{if (textInput.length > 7) { HandleCreateRequest(e, props.cookies, textInput, props.setKeyData); sTextInput("Key");}}}>Create</Button>
+                <Button color="info" block onClick={(e)=>{
+                    if (textInput.length > 7)
+                    {
+                        HandleCreateRequest(e, props.cookies, textInput, props.setKeyData);
+                        sTextInput("Key");
+                    }}}>Create</Button>
             </InputGroup>
             <br />
         </Container>

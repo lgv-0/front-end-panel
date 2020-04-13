@@ -27,18 +27,9 @@ export const LoginForm = (props) =>
             APIAuth({"username":us, "password":pw},
             (data)=>
                 {
-                    if (data.length < 18)
-                    {
-                        //Invalid
-                        fText("Username / Password invalid");
-                    }
-                    else
-                    {
-                        //Valid
-                        cookies.set("msid", data);
-                        cookies.set("name", values.username);
-                        fName(values.username);
-                    }
+                    cookies.set("msid", data.token);
+                    cookies.set("name", values.username);
+                    fName(values.username);
                 },
                 ()=>
                 {
