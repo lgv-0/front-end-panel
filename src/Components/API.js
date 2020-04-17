@@ -58,7 +58,7 @@ export function APIGetUsers(data, callbackSuccess, callbackError)
 
 export function APIPostKey(data, callbackSuccess, callbackError)
 {
-    axios.post("https://66.70.190.162/panel/keys", {"key":data.key},
+    axios.post("https://66.70.190.162/panel/keys", {"key":data.key, "cheats":data.cheats},
         {
             "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
         }).then((response) =>

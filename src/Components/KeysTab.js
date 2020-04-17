@@ -88,6 +88,24 @@ function KeyForm(props)
 
     let [cheatArray, sCheatArray] = useState([]);
 
+    let [selectCheatArray, sSelectCheatArray] = useState([]);
+
+    function SwapCheat(id)
+    {
+        let index = selectCheatArray.find((curid)=>{return curid === id});
+        if (index === undefined)
+            sSelectCheatArray([ ...selectCheatArray, id ]);
+        else
+        {
+            sSelectCheatArray(
+                selectCheatArray.filter((i)=>
+                {
+                    return id !== i;
+                })
+            );
+        }
+    }
+
     useEffect(() =>
     {
         if (cheatArray.length === 0)
@@ -113,9 +131,15 @@ function KeyForm(props)
                     <Button color="secondary" onClick={(e)=>{sTextInput(makeid(20))}}>Generate Random</Button>
                 </InputGroupAddon>
             </InputGroup>
-            { cheatArray.map((e)=>{ return (
+            { cheatArray.map((e)=>{ console.log(selectCheatArray)
+            return (
                 <InputGroup>
-                    <Input type="checkbox" key={e.id} name={e.name} title={e.name} />
+                    <Input
+                        type="checkbox"
+                        key={e.id}
+                        name={e.name}
+                        title={e.name}
+                        onChange={ (event)=>{ SwapCheat(e.id) } }/>
                     <Label for={e.name}>{e.name}</Label>
                 </InputGroup>
                 )
@@ -125,7 +149,7 @@ function KeyForm(props)
                 <Button color="info" block onClick={(e)=>{
                     if (textInput.length > 7)
                     {
-                        HandleCreateRequest(e, props.cookies, textInput, props.setKeyData);
+                        HandleCreateRequest(e, props.cookies, textInput, selectCheatArray, props.setKeyData);
                         sTextInput("Key");
                     }}}>Create</Button>
             </InputGroup>
@@ -134,9 +158,9 @@ function KeyForm(props)
     );
 }
 
-function HandleCreateRequest(e, cookies, key, fKeyData)
+function HandleCreateRequest(e, cookies, key, cheatids, fKeyData)
 {
-    APIPostKey({"atk":cookies.get("msid"), "key":key},
+    APIPostKey({"atk":cookies.get("msid"), "key": key, "cheats": cheatids },
         (data)=>
         {
             fKeyData([]);
