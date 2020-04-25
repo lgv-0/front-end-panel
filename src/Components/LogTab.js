@@ -32,7 +32,7 @@ function LogsTab(props)
                 }
 
                 tlogs += 
-                    `[${Location}][${response[i].timestamp}] [${response[i].level.toUpperCase()}] ${response[i].message}\n`;
+                    `[${Location}][${response[i].timestamp}][${response[i].level.toUpperCase()}] ${response[i].message}\n`;
             }
             sLogs(tlogs);
         })
