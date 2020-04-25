@@ -5,6 +5,7 @@ import styled from "styled-components";
 import UserTab from '../Components/UsersTab';
 import KeyTab from '../Components/KeysTab';
 import InfoTab from '../Components/InfoTab';
+import LogsTab from "../Components/LogTab";
 
 function Panel(props)
 {
@@ -23,6 +24,8 @@ function Panel(props)
                 return <KeyTab cookies={props.cookies} />
             case "info":
                 return <InfoTab cookies={props.cookies} />
+            case "logs":
+                return <LogsTab cookies={props.cookies} />
             default:
                 return <h1>Not found</h1>;
         }
@@ -37,6 +40,7 @@ function Panel(props)
                 <Link to="/panel/users"><div className="link">Users</div></Link>
                 <Link to="/panel/keys"><div className="link">Keys</div></Link>
                 <Link to="/panel/info"><div className="link">Cheat Info</div></Link>
+                <Link to="/panel/logs"><div className="link">Logs</div></Link>
                 <div id="bottom">
                     <p>{name}, <a href="##" onClick={()=>{props.cookies.remove("msid"); sName("");}}>Logout</a></p>
                 </div>

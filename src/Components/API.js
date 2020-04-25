@@ -78,6 +78,17 @@ export function APIDeleteKey(data, callbackSuccess, callbackError)
         }).catch(callbackError);
 }
 
+export function APIGetLogs(data, callbackSuccess, callbackError)
+{
+    axios.get(`https://66.70.190.162/panel/logs`,
+        {
+            "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
+        }).then((response) =>
+        {
+            callbackSuccess(response.data);
+        }).catch(callbackError);
+}
+
 export function APIAuth(data, callbackSuccess, callbackError)
 {
     axios.post("https://66.70.190.162/panel/auth", data,
