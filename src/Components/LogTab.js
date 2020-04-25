@@ -13,7 +13,27 @@ function LogsTab(props)
         {
             let tlogs = "";
             for (let i = 0; i < response.length; i++)
-                tlogs += `[${response[i].timestamp}] [${response[i].level.toUpperCase()}] ${response[i].message}\n`;
+            {
+                let Location = "U";
+                
+                switch (response[i].label)
+                {
+                    case "GLOBAL":
+                        Location = "G";
+                        break;
+                    case "PANEL":
+                        Location = "P";
+                        break;
+                    case "CLIENT":
+                        Location = "C";
+                        break;
+                    default:
+                        break;
+                }
+
+                tlogs += 
+                    `[${Location}][${response[i].timestamp}] [${response[i].level.toUpperCase()}] ${response[i].message}\n`;
+            }
             sLogs(tlogs);
         })
     }, []);
