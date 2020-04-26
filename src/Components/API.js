@@ -89,6 +89,20 @@ export function APIGetLogs(data, callbackSuccess, callbackError)
         }).catch(callbackError);
 }
 
+export function APIPutStatus(data, callbackSuccess, callbackError)
+{
+    axios.put(`https://66.70.190.162/panel/users/${data.id}/SETSTATUS?status=${data.status}`,
+        {
+            //data.status (((should))) be here honestly, but there's another issue here..
+        },
+        {
+            "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
+        }).then((response) =>
+        {
+            callbackSuccess(response.data);
+        }).catch(callbackError);
+}
+
 export function APIAuth(data, callbackSuccess, callbackError)
 {
     axios.post("https://66.70.190.162/panel/auth", data,

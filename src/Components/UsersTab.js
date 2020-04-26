@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { Table, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { APIGet, APIGetUsers } from "./API";
+import { APIGetUsers, APIPutStatus } from "./API";
 
 function UserTab(props)
 {
@@ -90,16 +90,15 @@ let MakePageOptions = (cnt, updfnc) =>
 
 function HandleSuspendResume (e, i, cookies, refresh, status)
 {
-    APIGet({"req":"setstat", "atk":cookies.get("msid"), "name":i["name"], "status":status},
+    APIPutStatus({"atk":cookies.get("msid"),status:status,id:i.id},
         (data)=>
         {
-            if (data === "x_Success")
-                refresh([]);
+            refresh([]);
         },
-        ()=>
+        (error)=>
         {
-            console.log("error");
-        });
+            console.log(error);
+        })
 }
 
 function GetSuspend(i, props, refresh)
