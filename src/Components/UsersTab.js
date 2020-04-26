@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { Table, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { APIGetUsers, APIPutStatus } from "./API";
+import { APIGetUsers, APIPutStatus, APIPutIP, APIPutHWID } from "./API";
 
 function UserTab(props)
 {
@@ -101,6 +101,32 @@ function HandleSuspendResume (e, i, cookies, refresh, status)
         })
 }
 
+function ResetIP(i, props, refresh)
+{
+    APIPutIP({"atk":props.cookies.msid,id:i.id},
+        (data)=>
+        {
+            refresh([]);
+        },
+        (error)=>
+        {
+            console.log(error);
+        })
+}
+
+function ResetHWID(i, props, refresh)
+{
+    APIPutHWID({"atk":props.cookies.msid,id:i.id},
+        (data)=>
+        {
+            refresh([]);
+        },
+        (error)=>
+        {
+            console.log(error);
+        })
+}
+
 function GetSuspend(i, props, refresh)
 {
     let toReturn = i.status == 2 ? <Button color="warning" onClick={(e)=>HandleSuspendResume(e, i, props, refresh, 1)}>Denied</Button>
@@ -113,11 +139,11 @@ function makeTableRow(i, cookies, refresh)
     return (
         <tr key={i.name}>
             <th scope="row">{i.name}</th>
-            <td>{i.regdate.trim(0, 50)}</td>
+            <td>{i.regdate.substring(0, 10)}</td>
             <td>{i.status == 0 ? "Admin" : GetSuspend(i, cookies, refresh)}</td>
             <td>{i.lastlogin}</td>
-            <td>{i.ip}</td>
-            <td>{i.hwid}</td>
+            <td><Button color="secondary" onClick={(e)=>ResetIP(i, cookies, refresh)}>{i.ip}</Button></td>
+            <td><Button color="secondary" onClick={(e)=>ResetHWID(i, cookies, refresh)}>{i.hwid}</Button></td>
         </tr>);
 }
 

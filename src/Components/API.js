@@ -103,6 +103,34 @@ export function APIPutStatus(data, callbackSuccess, callbackError)
         }).catch(callbackError);
 }
 
+export function APIPutIP(data, callbackSuccess, callbackError)
+{
+    axios.put(`https://66.70.190.162/panel/users/${data.id}/RIP`,
+        {
+
+        },
+        {
+            "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
+        }).then((response)=>
+        {
+            callbackSuccess(response.data);
+        }).catch(callbackError);
+}
+
+export function APIPutHWID(data, callbackSuccess, callbackError)
+{
+    axios.put(`https://66.70.190.162/panel/users/${data.id}/RHWID`,
+        {
+
+        },
+        {
+            "headers":{"Content-Type":"application/json", "Accept":"*", "Authorization":data.atk}
+        }).then((response)=>
+        {
+            callbackSuccess(response.data);
+        }).catch(callbackError);
+}
+
 export function APIAuth(data, callbackSuccess, callbackError)
 {
     axios.post("https://66.70.190.162/panel/auth", data,
