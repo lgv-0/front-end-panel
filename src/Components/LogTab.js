@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
 import styled from "styled-components";
 import { APIGetLogs } from './API';
 
+function DateFromUTCString(utc)
+{
+    let temp = new Date(utc);
+    return `${temp.toLocaleDateString()} ${('00'+temp.getHours()).slice(-2)}:${('00'+temp.getMinutes()).slice(-2)}:${('00'+temp.getSeconds()).slice(-2)}`;
+}
+
 function LogsTab(props)
 {
-    let [title, sTitle] = useState("Logs");
+    let [title] = useState("Logs");
     let [logs, sLogs] = useState("");
 
     useEffect(()=>{
@@ -19,20 +24,23 @@ function LogsTab(props)
                 switch (response[i].label)
                 {
                     case "GLOBAL":
-                        Location = "G";
+                        Location = "GLOBAL";
                         break;
                     case "PANEL":
-                        Location = "P";
+                        Location = "PANEL";
                         break;
                     case "CLIENT":
-                        Location = "C";
+                        Location = "CLIENT";
+                        break;
+                    case "CHEAT":
+                        Location = "CHEAT";
                         break;
                     default:
                         break;
                 }
 
                 tlogs += 
-                    `[${Location}][${response[i].timestamp}][${response[i].level.toUpperCase()}] ${response[i].message}\n`;
+                    `[${Location}][${DateFromUTCString(response[i].timestamp)}][${response[i].level.toUpperCase()}] ${response[i].message}\n`;
             }
             sLogs(tlogs);
         })

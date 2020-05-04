@@ -141,10 +141,15 @@ function makeTableRow(i, cookies, refresh)
             <th scope="row">{i.name}</th>
             <td>{i.regdate.substring(0, 10)}</td>
             <td>{i.status == 0 ? "Admin" : GetSuspend(i, cookies, refresh)}</td>
-            <td>{i.lastlogin}</td>
+            <td>{DateFromUTCString(i.lastlogin)}</td>
             <td><Button color="secondary" onClick={(e)=>ResetIP(i, cookies, refresh)}>{i.ip}</Button></td>
             <td><Button color="secondary" onClick={(e)=>ResetHWID(i, cookies, refresh)}>{i.hwid}</Button></td>
         </tr>);
+}
+
+function DateFromUTCString(utc)
+{
+    return `${new Date(utc).toLocaleString()}`;
 }
 
 export default UserTab;
